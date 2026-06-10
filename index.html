@@ -7,482 +7,90 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --color-bg: #ffffff;
-      --color-bg-secondary: #f5f5f3;
-      --color-bg-tertiary: #eeede9;
-      --color-text-primary: #1a1a18;
-      --color-text-secondary: #6b6b67;
-      --color-text-tertiary: #9b9b96;
-      --color-border: rgba(0,0,0,0.12);
-      --color-border-md: rgba(0,0,0,0.22);
-      --radius-md: 8px;
-      --radius-lg: 12px;
+      --color-bg: #ffffff; --color-bg-secondary: #f5f5f3; --color-bg-tertiary: #eeede9;
+      --color-text-primary: #1a1a18; --color-text-secondary: #6b6b67; --color-text-tertiary: #9b9b96;
+      --color-border: rgba(0,0,0,0.12); --color-border-md: rgba(0,0,0,0.22);
+      --radius-md: 8px; --radius-lg: 12px;
       --font: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
     }
-
     @media (prefers-color-scheme: dark) {
       :root {
-        --color-bg: #1c1c1a;
-        --color-bg-secondary: #262624;
-        --color-bg-tertiary: #2e2e2b;
-        --color-text-primary: #f0f0ee;
-        --color-text-secondary: #9b9b96;
-        --color-text-tertiary: #6b6b67;
-        --color-border: rgba(255,255,255,0.1);
-        --color-border-md: rgba(255,255,255,0.2);
+        --color-bg: #1c1c1a; --color-bg-secondary: #262624; --color-bg-tertiary: #2e2e2b;
+        --color-text-primary: #f0f0ee; --color-text-secondary: #9b9b96; --color-text-tertiary: #6b6b67;
+        --color-border: rgba(255,255,255,0.1); --color-border-md: rgba(255,255,255,0.2);
       }
     }
-
-    body {
-      font-family: var(--font);
-      background: var(--color-bg-tertiary);
-      color: var(--color-text-primary);
-      min-height: 100vh;
-      padding: 1.5rem 1rem 4rem;
-    }
-
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .app-title {
-      font-size: 20px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .header-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 2px;
-    }
-
-    #clock {
-      font-size: 22px;
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
-      color: var(--color-text-primary);
-    }
-
-    #today-date {
-      font-size: 13px;
-      color: var(--color-text-secondary);
-    }
-
-
-    .tab-bar {
-      display: flex;
-      gap: 0;
-      margin-bottom: 1.5rem;
-      border-bottom: 0.5px solid var(--color-border);
-      overflow-x: auto;
-    }
-
-    .tab {
-      padding: 10px 18px;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--color-text-secondary);
-      cursor: pointer;
-      border: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -0.5px;
-      background: none;
-      white-space: nowrap;
-      font-family: var(--font);
-      transition: color 0.15s;
-    }
-
-    .tab.active {
-      color: var(--color-text-primary);
-      font-weight: 500;
-      border-bottom: 2px solid var(--color-text-primary);
-    }
-
+    body { font-family: var(--font); background: var(--color-bg-tertiary); color: var(--color-text-primary); min-height: 100vh; padding: 1.5rem 1rem 4rem; }
+    .container { max-width: 720px; margin: 0 auto; }
+    .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 1rem; gap: 4px; }
+    .app-title { font-size: 28px; font-weight: 600; text-align: center; color: #1A6ED8; }
+    #today-date-header { font-size: 20px; font-weight: 500; color: var(--color-text-primary); text-align: center; margin-top: 4px; }
+    .time-display { font-size: 34px; font-weight: 700; text-align: center; padding: 1rem 0 0.5rem; font-variant-numeric: tabular-nums; color: #1A6ED8; letter-spacing: 0.02em; }
+    .tab-bar { display: flex; margin-bottom: 1.5rem; border-bottom: 0.5px solid var(--color-border); overflow-x: auto; }
+    .tab { padding: 10px 18px; font-size: 14px; font-weight: 400; color: var(--color-text-secondary); cursor: pointer; border: none; border-bottom: 2px solid transparent; margin-bottom: -0.5px; background: none; white-space: nowrap; font-family: var(--font); }
+    .tab.active { color: var(--color-text-primary); font-weight: 500; border-bottom: 2px solid var(--color-text-primary); }
     .tab:hover:not(.active) { color: var(--color-text-primary); }
-
-    .section { display: none; }
-    .section.active { display: block; }
-
-    .card {
-      background: var(--color-bg);
-      border: 0.5px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
-      margin-bottom: 1rem;
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 12px;
-      margin-bottom: 1rem;
-    }
-
-    .metric {
-      background: var(--color-bg-secondary);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-    }
-
-    .metric-label {
-      font-size: 12px;
-      color: var(--color-text-secondary);
-      margin-bottom: 4px;
-    }
-
-    .metric-value {
-      font-size: 22px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-    }
-
-    .metric-value.late { color: #D85A30; }
-    .metric-value.ok { color: #1D9E75; }
-
-    .time-display {
-      font-size: 36px;
-      font-weight: 500;
-      text-align: center;
-      padding: 1rem 0 0.5rem;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .status-badge {
-      display: inline-block;
-      font-size: 12px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-weight: 500;
-    }
-
-    .badge-open { background: #EAF3DE; color: #3B6D11; }
-    .badge-closed { background: #FAECE7; color: #993C1D; }
-    .badge-late { background: #FAECE7; color: #993C1D; }
-    .badge-ontime { background: #EAF3DE; color: #3B6D11; }
-
-    .name-input-wrap {
-      display: flex;
-      gap: 8px;
-      margin: 1rem 0;
-    }
-
-    input[type="text"], input[type="time"] {
-      font-family: var(--font);
-      padding: 10px 12px;
-      font-size: 15px;
-      border: 0.5px solid var(--color-border-md);
-      border-radius: var(--radius-md);
-      background: var(--color-bg);
-      color: var(--color-text-primary);
-      outline: none;
-    }
-
-    input[type="text"]:focus, input[type="time"]:focus {
-      border-color: var(--color-text-secondary);
-      box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
-    }
-
-    input[type="text"]::placeholder { color: var(--color-text-tertiary); }
-
-    .name-input-wrap input[type="text"] { flex: 1; }
-
-    .btn-primary {
-      padding: 10px 20px;
-      background: var(--color-text-primary);
-      color: var(--color-bg);
-      border: none;
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: var(--font);
-      white-space: nowrap;
-    }
-
+    .section { display: none; } .section.active { display: block; }
+    .card { background: var(--color-bg); border: 0.5px solid var(--color-border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 1rem; }
+    .metric { background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: 1rem; }
+    .metric-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .metric-value { font-size: 22px; font-weight: 500; }
+    .metric-value.late { color: #D85A30; } .metric-value.ok { color: #1D9E75; }
+    .status-badge { display: inline-block; font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+    .badge-open { background: #EAF3DE; color: #3B6D11; } .badge-closed { background: #FAECE7; color: #993C1D; }
+    .badge-late { background: #FAECE7; color: #993C1D; } .badge-ontime { background: #EAF3DE; color: #3B6D11; }
+    .name-input-wrap { display: flex; gap: 8px; margin: 1rem 0; }
+    input[type="text"], input[type="password"] { font-family: var(--font); padding: 10px 6px; font-size: 20px; border: 0.5px solid var(--color-border-md); border-radius: var(--radius-md); background: var(--color-bg); color: var(--color-text-primary); outline: none; }
+    input[type="text"]:focus, input[type="password"]:focus { border-color: var(--color-text-secondary); box-shadow: 0 0 0 3px rgba(0,0,0,0.06); }
+    input::placeholder { color: var(--color-text-tertiary); }
+    .name-input-wrap input { flex: 1; }
+    .btn-primary { padding: 10px 20px; background: var(--color-text-primary); color: var(--color-bg); border: none; border-radius: var(--radius-md); font-size: 14px; font-weight: 500; cursor: pointer; font-family: var(--font); white-space: nowrap; }
     .btn-primary:hover { opacity: 0.85; }
-
-    .btn-secondary {
-      padding: 8px 14px;
-      background: transparent;
-      color: var(--color-text-primary);
-      border: 0.5px solid var(--color-border-md);
-      border-radius: var(--radius-md);
-      font-size: 13px;
-      cursor: pointer;
-      font-family: var(--font);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
+    .btn-secondary { padding: 8px 14px; background: transparent; color: var(--color-text-primary); border: 0.5px solid var(--color-border-md); border-radius: var(--radius-md); font-size: 13px; cursor: pointer; font-family: var(--font); display: inline-flex; align-items: center; gap: 6px; }
     .btn-secondary:hover { background: var(--color-bg-secondary); }
-
-    .alert {
-      padding: 12px 16px;
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      margin-top: 8px;
-    }
-
-    .alert-warn { background: #FAEEDA; color: #633806; }
-    .alert-success { background: #EAF3DE; color: #27500A; }
-    .alert-info { background: #FAECE7; color: #993C1D; }
-
-    .section-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--color-text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 12px;
-    }
-
-    .row-between {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-    }
-
-    .log-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      table-layout: fixed;
-    }
-
-    .log-table th {
-      text-align: left;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--color-text-secondary);
-      border-bottom: 0.5px solid var(--color-border);
-    }
-
-    .log-table td {
-      padding: 10px 12px;
-      border-bottom: 0.5px solid var(--color-border);
-      color: var(--color-text-primary);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
+    .btn-danger { padding: 8px 14px; background: transparent; color: #993C1D; border: 0.5px solid #F0997B; border-radius: var(--radius-md); font-size: 13px; cursor: pointer; font-family: var(--font); display: inline-flex; align-items: center; gap: 6px; }
+    .btn-danger:hover { background: #FAECE7; }
+    .alert { padding: 12px 16px; border-radius: var(--radius-md); font-size: 14px; margin-top: 8px; }
+    .alert-warn { background: #FAEEDA; color: #633806; } .alert-success { background: #EAF3DE; color: #27500A; } .alert-info { background: #FAECE7; color: #993C1D; }
+    .section-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .row-between { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+    .log-table { width: 100%; border-collapse: collapse; font-size: 14px; table-layout: fixed; }
+    .log-table th { text-align: left; padding: 8px 12px; font-size: 12px; font-weight: 500; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border); }
+    .log-table td { padding: 10px 12px; border-bottom: 0.5px solid var(--color-border); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .log-table tr:last-child td { border-bottom: none; }
     .rank { font-size: 12px; color: var(--color-text-secondary); }
-
-    .filter-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .filter-row select {
-      padding: 7px 10px;
-      font-size: 13px;
-      border: 0.5px solid var(--color-border-md);
-      border-radius: var(--radius-md);
-      background: var(--color-bg);
-      color: var(--color-text-primary);
-      cursor: pointer;
-      font-family: var(--font);
-    }
-
-    .stat-bar-bg {
-      background: var(--color-bg-secondary);
-      border-radius: 4px;
-      height: 8px;
-      overflow: hidden;
-      margin-top: 4px;
-    }
-
-    .stat-bar-fill {
-      height: 8px;
-      border-radius: 4px;
-      background: #D85A30;
-      transition: width 0.4s;
-    }
-
-    .student-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 0.5px solid var(--color-border);
-    }
-
+    .filter-row { display: flex; gap: 8px; margin-bottom: 1rem; align-items: center; flex-wrap: wrap; }
+    .filter-row select { padding: 7px 10px; font-size: 13px; border: 0.5px solid var(--color-border-md); border-radius: var(--radius-md); background: var(--color-bg); color: var(--color-text-primary); cursor: pointer; font-family: var(--font); }
+    .stat-bar-bg { background: var(--color-bg-secondary); border-radius: 4px; height: 8px; overflow: hidden; margin-top: 4px; }
+    .stat-bar-fill { height: 8px; border-radius: 4px; background: #D85A30; transition: width 0.4s; }
+    .student-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid var(--color-border); }
     .student-row:last-child { border-bottom: none; }
-
-    .avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #E6F1FB;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 500;
-      color: #185FA5;
-      flex-shrink: 0;
-    }
-
+    .avatar { width: 34px; height: 34px; border-radius: 50%; background: #E6F1FB; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #185FA5; flex-shrink: 0; }
     .student-name { font-size: 14px; font-weight: 500; flex: 1; }
     .student-stats { font-size: 12px; color: var(--color-text-secondary); text-align: right; }
-
-    .empty {
-      text-align: center;
-      padding: 2rem;
-      color: var(--color-text-secondary);
-      font-size: 14px;
-    }
-
+    .empty { text-align: center; padding: 2rem; color: var(--color-text-secondary); font-size: 14px; }
     .data-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.5rem; }
-
     .data-group { margin-top: 0.5rem; }
-
-    .data-group-label {
-      font-size: 12px;
-      color: var(--color-text-secondary);
-      margin-bottom: 8px;
-    }
-
-    .data-divider {
-      border-top: 0.5px solid var(--color-border);
-      margin: 1rem 0 0;
-    }
-
-    .btn-danger {
-      padding: 8px 14px;
-      background: transparent;
-      color: #993C1D;
-      border: 0.5px solid #F0997B;
-      border-radius: var(--radius-md);
-      font-size: 13px;
-      cursor: pointer;
-      font-family: var(--font);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-danger:hover { background: #FAECE7; }
-
-    .lock-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1rem;
-      gap: 1rem;
-    }
-
-    .lock-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--color-bg-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      color: var(--color-text-secondary);
-      margin-bottom: 0.5rem;
-    }
-
-    .lock-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-    }
-
-    .lock-desc {
-      font-size: 13px;
-      color: var(--color-text-secondary);
-      margin-top: -0.5rem;
-    }
-
-    .lock-input-wrap {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-      max-width: 300px;
-    }
-
-    .lock-input-wrap input[type="password"] {
-      flex: 1;
-      padding: 10px 12px;
-      font-size: 15px;
-      border: 0.5px solid var(--color-border-md);
-      border-radius: var(--radius-md);
-      background: var(--color-bg);
-      color: var(--color-text-primary);
-      outline: none;
-      font-family: var(--font);
-      letter-spacing: 0.2em;
-    }
-
-    .lock-input-wrap input[type="password"]:focus {
-      border-color: var(--color-text-secondary);
-      box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
-    }
-
-    .lock-error {
-      font-size: 13px;
-      color: #D85A30;
-      min-height: 18px;
-    }
-
-    .unlock-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #EAF3DE;
-      border: 0.5px solid #97C459;
-      border-radius: var(--radius-md);
-      padding: 10px 16px;
-      margin-bottom: 1rem;
-      font-size: 13px;
-      color: #27500A;
-    }
-
-    @media (max-width: 480px) {
-      body { padding: 1rem 0.75rem 3rem; }
-      .time-display { font-size: 28px; }
-    }
+    .data-group-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 8px; }
+    .data-divider { border-top: 0.5px solid var(--color-border); margin: 1rem 0 0; }
+    .lock-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 1rem; gap: 1rem; }
+    .lock-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--color-bg-secondary); display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--color-text-secondary); margin-bottom: 0.5rem; }
+    .lock-title { font-size: 16px; font-weight: 500; }
+    .lock-desc { font-size: 13px; color: var(--color-text-secondary); margin-top: -0.5rem; }
+    .lock-input-wrap { display: flex; gap: 8px; width: 100%; max-width: 300px; }
+    .lock-input-wrap input[type="password"] { flex: 1; letter-spacing: 0.2em; }
+    .lock-error { font-size: 13px; color: #D85A30; min-height: 18px; }
+    .unlock-bar { display: flex; align-items: center; justify-content: space-between; background: #EAF3DE; border: 0.5px solid #97C459; border-radius: var(--radius-md); padding: 10px 16px; margin-bottom: 1rem; font-size: 13px; color: #27500A; }
+    @media (max-width: 480px) { body { padding: 1rem 0.75rem 3rem; } .time-display { font-size: 28px; } }
   </style>
 </head>
 <body>
 <div class="container">
-
   <div class="header">
-    <div>
-      <div class="app-title">출석 관리</div>
-      <div id="today-date" style="font-size:13px; color:var(--color-text-secondary); margin-top:2px;"></div>
-    </div>
-    <div class="header-right">
-      <div id="clock"></div>
-    </div>
+    <div class="app-title">출석 관리</div>
+    <div id="today-date-header"></div>
   </div>
 
   <div class="tab-bar">
@@ -497,7 +105,7 @@
   <div class="section active" id="tab-checkin">
     <div class="card">
       <div class="row-between">
-        <div class="section-label" style="margin-bottom:0;">출석 체크</div>
+        <div style="font-size:22px; font-weight:600; color:var(--color-text-primary); margin-bottom:0;">출석 체크</div>
         <div id="status-badge-main"></div>
       </div>
       <div class="time-display" id="big-clock">--:--:--</div>
@@ -556,8 +164,6 @@
 
   <!-- 학생 관리 -->
   <div class="section" id="tab-students">
-
-    <!-- 잠금 화면 -->
     <div id="student-lock-screen" class="card">
       <div class="lock-screen">
         <div class="lock-icon"><i class="ti ti-lock"></i></div>
@@ -570,8 +176,6 @@
         <div class="lock-error" id="pw-error"></div>
       </div>
     </div>
-
-    <!-- 잠금 해제 후 보이는 영역 -->
     <div id="student-content" style="display:none;">
       <div class="unlock-bar">
         <span><i class="ti ti-lock-open"></i> 교사 모드 활성화됨</span>
@@ -611,74 +215,25 @@
         </div>
       </div>
     </div>
-
   </div>
-
 </div>
 
 <script>
   const KEY_STUDENTS = 'att_students';
   const KEY_RECORDS  = 'att_records';
-  let students = [];
-  let records  = [];
+  let students = [], records = [], studentUnlocked = false;
 
-  function getFakeNow() { return new Date(); }
-
-  function save() {
-    localStorage.setItem(KEY_STUDENTS, JSON.stringify(students));
-    localStorage.setItem(KEY_RECORDS,  JSON.stringify(records));
+  function checkPassword(val) {
+    // 암호: 202624 (간단한 난독화)
+    const encoded = [50,48,50,54,50,52];
+    const input = val.split('').map(c => c.charCodeAt(0));
+    if (input.length !== encoded.length) return false;
+    return input.every((c, i) => c === encoded[i]);
   }
 
-  function load() {
-    try {
-      const s = localStorage.getItem(KEY_STUDENTS);
-      students = s ? JSON.parse(s) : defaultStudents();
-    } catch { students = defaultStudents(); }
-    try {
-      const r = localStorage.getItem(KEY_RECORDS);
-      records = r ? JSON.parse(r) : [];
-    } catch { records = []; }
-    renderStudentManage();
-    renderWeeklySelect();
-    renderMonthlySelect();
-    renderTodayLog();
-    renderToday();
-    renderWeekly();
-    renderMonthly();
-  }
-
-  function defaultStudents() {
-    return ['김민준','이서연','박지호','최수아','정도윤','강하은','조민서','윤지아',
-            '임준혁','한채원','오세준','신예린','백승우','류지민','허나은','남현우',
-            '문서아','홍태양','안지원','전민아','고승준','양채린','배민호','손수진'];
-  }
-
-  function fmtTime(ts) { return new Date(ts).toTimeString().slice(0, 8); }
-  function fmtDate(ts) { return new Date(ts).toISOString().slice(0, 10); }
-  function todayStr()  { return fmtDate(new Date()); }
-
-  function isWindowOpen(t) {
-    const mins = t.getHours() * 60 + t.getMinutes();
-    return mins >= 480 && mins < 490;
-  }
-
-  function isLate(t) {
-    const d = new Date(t);
-    return d.getHours() > 8 || (d.getHours() === 8 && (d.getMinutes() > 0 || d.getSeconds() > 0));
-  }
-
-  const ADMIN_HASH = '4690ce8fc8548b2ab6c5872f93e5fe83d877e56bbe9595c74bf6b7bf06264b8c';
-  let studentUnlocked = false;
-
-  async function sha256(str) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  }
-
-  async function tryUnlock() {
+  function tryUnlock() {
     const val = document.getElementById('pw-input').value;
-    const hash = await sha256(val);
-    if (hash === ADMIN_HASH) {
+    if (checkPassword(val)) {
       studentUnlocked = true;
       document.getElementById('student-lock-screen').style.display = 'none';
       document.getElementById('student-content').style.display = '';
@@ -700,271 +255,220 @@
     document.getElementById('pw-error').textContent = '';
   }
 
+  function save() {
+    localStorage.setItem(KEY_STUDENTS, JSON.stringify(students));
+    localStorage.setItem(KEY_RECORDS,  JSON.stringify(records));
+  }
+
+  function load() {
+    try { const s = localStorage.getItem(KEY_STUDENTS); students = s ? JSON.parse(s) : defaultStudents(); } catch { students = defaultStudents(); }
+    try { const r = localStorage.getItem(KEY_RECORDS);  records  = r ? JSON.parse(r) : []; } catch { records = []; }
+    renderStudentManage(); renderWeeklySelect(); renderMonthlySelect();
+    renderTodayLog(); renderToday(); renderWeekly(); renderMonthly();
+  }
+
+  function defaultStudents() {
+    return ['김민준','이서연','박지호','최수아','정도윤','강하은','조민서','윤지아',
+            '임준혁','한채원','오세준','신예린','백승우','류지민','허나은','남현우',
+            '문서아','홍태양','안지원','전민아','고승준','양채린','배민호','손수진'];
+  }
+
+  function fmtTime(ts) { return new Date(ts).toTimeString().slice(0,8); }
+  function fmtDate(d)  { return new Date(d).toISOString().slice(0,10); }
+  function todayStr()  { return fmtDate(new Date()); }
+
+  function isWindowOpen(t) { const m = t.getHours()*60+t.getMinutes(); return m>=480&&m<490; }
+  function isLate(t) { const d=new Date(t); return d.getHours()>8||(d.getHours()===8&&(d.getMinutes()>0||d.getSeconds()>0)); }
+
+  function getMonday(date) {
+    const d=new Date(date), day=d.getDay();
+    d.setDate(d.getDate()-(day===0?6:day-1));
+    return fmtDate(d);
+  }
+
   function switchTab(id) {
     if (id !== 'students' && studentUnlocked) lockStudents();
     const ids = ['checkin','today','weekly','monthly','students'];
-    document.querySelectorAll('.tab').forEach((b, i) => b.classList.toggle('active', ids[i] === id));
+    document.querySelectorAll('.tab').forEach((b,i) => b.classList.toggle('active', ids[i]===id));
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById('tab-' + id).classList.add('active');
-    if (id === 'today')   renderToday();
-    if (id === 'weekly')  renderWeekly();
-    if (id === 'monthly') renderMonthly();
+    document.getElementById('tab-'+id).classList.add('active');
+    if (id==='today') renderToday();
+    if (id==='weekly') renderWeekly();
+    if (id==='monthly') renderMonthly();
   }
 
   function updateClock() {
-    const t = new Date();
-    const ts = t.toTimeString().slice(0, 8);
-
-    document.getElementById('clock').textContent = ts;
-    document.getElementById('big-clock').textContent = ts;
-    document.getElementById('today-date').textContent =
-      t.toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric', weekday:'short' });
-
-    const open = isWindowOpen(t);
-    const checkinPanel  = document.getElementById('checkin-panel');
-    const closedMsg     = document.getElementById('window-closed-msg');
-    const badge         = document.getElementById('status-badge-main');
-
-    if (open) {
-      checkinPanel.style.display = '';
-      closedMsg.style.display    = 'none';
-      badge.innerHTML = `<span class="status-badge badge-open">출석 확인 중</span>`;
-    } else {
-      checkinPanel.style.display = 'none';
-      closedMsg.style.display    = '';
-      badge.innerHTML = `<span class="status-badge badge-closed">확인 시간 외</span>`;
-    }
+    const t=new Date();
+    const h=t.getHours(), m=t.getMinutes(), s=t.getSeconds();
+    const ampm=h<12?'오전':'오후';
+    const h12=h%12||12;
+    const bigTs=`${ampm} ${String(h12).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    document.getElementById('big-clock').textContent = bigTs;
+    document.getElementById('today-date-header').textContent = t.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'short'});
+    const open=isWindowOpen(t);
+    document.getElementById('checkin-panel').style.display = open?'':'none';
+    document.getElementById('window-closed-msg').style.display = open?'none':'';
+    document.getElementById('status-badge-main').innerHTML = open
+      ? '<span class="status-badge badge-open">출석 확인 중</span>'
+      : '<span class="status-badge badge-closed">확인 시간 외</span>';
   }
 
   function doCheckin() {
-    const t = new Date();
-    if (!isWindowOpen(t)) { showMsg('출석 확인 시간(08:00~08:10)이 아닙니다.', 'warn'); return; }
-    const name = document.getElementById('name-input').value.trim();
-    if (!name) { showMsg('이름을 입력해주세요.', 'warn'); return; }
-    if (!students.includes(name)) { showMsg(`"${name}" 은(는) 명단에 없는 학생입니다.`, 'warn'); return; }
-    const today = todayStr();
-    const already = records.find(r => r.name === name && r.date === today);
-    if (already) { showMsg(`${name} 학생은 오늘 이미 기록되었습니다. (${fmtTime(already.ts)})`, 'warn'); return; }
-    const late = isLate(t);
-    records.push({ name, date: today, ts: t.getTime(), late });
+    const t=new Date();
+    if (!isWindowOpen(t)) { showMsg('출석 확인 시간(08:00~08:10)이 아닙니다.','warn'); return; }
+    const name=document.getElementById('name-input').value.trim();
+    if (!name) { showMsg('이름을 입력해주세요.','warn'); return; }
+    if (!students.includes(name)) { showMsg(`"${name}" 은(는) 명단에 없는 학생입니다.`,'warn'); return; }
+    const today=todayStr(), already=records.find(r=>r.name===name&&r.date===today);
+    if (already) { showMsg(`${name} 학생은 오늘 이미 기록되었습니다. (${fmtTime(already.ts)})`,'warn'); return; }
+    const late=isLate(t);
+    records.push({name, date:today, ts:t.getTime(), late});
     save();
-    showMsg(`${name} 학생 ${late ? '지각' : '정시'} 입실 기록: ${fmtTime(t.getTime())}`, 'ok');
-    document.getElementById('name-input').value = '';
-    renderTodayLog();
-    renderToday();
+    showMsg(`${name} 학생 ${late?'지각':'정시'} 입실 기록: ${fmtTime(t.getTime())}`,'ok');
+    document.getElementById('name-input').value='';
+    renderTodayLog(); renderToday();
   }
 
-  function showMsg(msg, type) {
-    const el = document.getElementById('checkin-msg');
-    el.innerHTML = `<div class="alert ${type === 'warn' ? 'alert-warn' : 'alert-success'}">${msg}</div>`;
-    setTimeout(() => { el.innerHTML = ''; }, 3500);
-  }
-
-  function renderTodayLog() {
-    const today  = todayStr();
-    const todays = records.filter(r => r.date === today).sort((a,b) => a.ts - b.ts);
-    const el = document.getElementById('today-log-mini');
-    if (!todays.length) { el.innerHTML = '<div class="empty">오늘 기록된 입실 내역이 없습니다.</div>'; return; }
-    el.innerHTML = tableHTML(todays);
+  function showMsg(msg,type) {
+    const el=document.getElementById('checkin-msg');
+    el.innerHTML=`<div class="alert ${type==='warn'?'alert-warn':'alert-success'}">${msg}</div>`;
+    setTimeout(()=>{el.innerHTML='';},3500);
   }
 
   function tableHTML(rows) {
-    return `<table class="log-table">
-      <thead><tr>
-        <th style="width:32px">#</th>
-        <th>이름</th>
-        <th>입실 시간</th>
-        <th style="width:72px">상태</th>
-      </tr></thead>
-      <tbody>${rows.map((r, i) => `<tr>
-        <td class="rank">${i+1}</td>
-        <td>${r.name}</td>
-        <td style="font-variant-numeric:tabular-nums">${fmtTime(r.ts)}</td>
-        <td><span class="status-badge ${r.late ? 'badge-late' : 'badge-ontime'}">${r.late ? '지각' : '정시'}</span></td>
-      </tr>`).join('')}</tbody>
-    </table>`;
+    return `<table class="log-table"><thead><tr><th style="width:32px">#</th><th>이름</th><th>입실 시간</th><th style="width:72px">상태</th></tr></thead><tbody>`
+      +rows.map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${r.name}</td><td style="font-variant-numeric:tabular-nums">${fmtTime(r.ts)}</td><td><span class="status-badge ${r.late?'badge-late':'badge-ontime'}">${r.late?'지각':'정시'}</span></td></tr>`).join('')
+      +`</tbody></table>`;
+  }
+
+  function renderTodayLog() {
+    const today=todayStr(), rows=records.filter(r=>r.date===today).sort((a,b)=>a.ts-b.ts);
+    document.getElementById('today-log-mini').innerHTML=rows.length?tableHTML(rows):'<div class="empty">오늘 기록된 입실 내역이 없습니다.</div>';
   }
 
   function renderToday() {
-    const today  = todayStr();
-    const todays = records.filter(r => r.date === today);
-    const late   = todays.filter(r => r.late);
-    const ontime = todays.filter(r => !r.late);
-    document.getElementById('today-metrics').innerHTML = `
+    const today=todayStr(), todays=records.filter(r=>r.date===today);
+    const late=todays.filter(r=>r.late);
+    document.getElementById('today-metrics').innerHTML=`
       <div class="metric"><div class="metric-label">전체 학생</div><div class="metric-value">${students.length}명</div></div>
       <div class="metric"><div class="metric-label">오늘 지각</div><div class="metric-value late">${late.length}명</div></div>
-      <div class="metric"><div class="metric-label">정시 입실</div><div class="metric-value ok">${ontime.length}명</div></div>
-      <div class="metric"><div class="metric-label">미기록</div><div class="metric-value">${students.length - todays.length}명</div></div>`;
-    const el = document.getElementById('today-full-log');
-    const sorted = [...todays].sort((a,b) => a.ts - b.ts);
-    el.innerHTML = sorted.length ? tableHTML(sorted) : '<div class="empty">오늘 기록된 입실 내역이 없습니다.</div>';
+      <div class="metric"><div class="metric-label">미기록</div><div class="metric-value">${students.length-todays.length}명</div></div>`;
+    const sorted=[...todays].sort((a,b)=>a.ts-b.ts);
+    document.getElementById('today-full-log').innerHTML=sorted.length?tableHTML(sorted):'<div class="empty">오늘 기록된 입실 내역이 없습니다.</div>';
   }
 
   function renderWeeklySelect() {
-    const weeks = new Set(records.map(r => getMonday(r.date)));
+    const weeks=new Set(records.map(r=>getMonday(r.date)));
     weeks.add(getMonday(new Date()));
-    const sorted = [...weeks].sort().reverse();
-    document.getElementById('week-select').innerHTML = sorted.map(w => {
-      const d = new Date(w), e = new Date(w);
-      e.setDate(d.getDate() + 4);
+    document.getElementById('week-select').innerHTML=[...weeks].sort().reverse().map(w=>{
+      const d=new Date(w),e=new Date(w); e.setDate(d.getDate()+4);
       return `<option value="${w}">${d.getMonth()+1}/${d.getDate()} ~ ${e.getMonth()+1}/${e.getDate()}</option>`;
     }).join('');
   }
 
   function renderWeekly() {
-    const weekStart = document.getElementById('week-select').value;
-    if (!weekStart) return;
-    const d = new Date(weekStart);
-    const dates = Array.from({length:5}, (_,i) => { const dd = new Date(d); dd.setDate(d.getDate()+i); return fmtDate(dd); });
-    const weekRecs = records.filter(r => dates.includes(r.date));
-    const lateRecs = weekRecs.filter(r => r.late);
-    const days     = new Set(weekRecs.map(r => r.date)).size;
-    document.getElementById('weekly-metrics').innerHTML = `
+    const ws=document.getElementById('week-select').value; if(!ws) return;
+    const d=new Date(ws), dates=Array.from({length:5},(_,i)=>{const dd=new Date(d);dd.setDate(d.getDate()+i);return fmtDate(dd);});
+    const wr=records.filter(r=>dates.includes(r.date)), lr=wr.filter(r=>r.late), days=new Set(wr.map(r=>r.date)).size;
+    document.getElementById('weekly-metrics').innerHTML=`
       <div class="metric"><div class="metric-label">수업일</div><div class="metric-value">${days}일</div></div>
-      <div class="metric"><div class="metric-label">총 지각</div><div class="metric-value late">${lateRecs.length}건</div></div>
-      <div class="metric"><div class="metric-label">지각 학생</div><div class="metric-value">${new Set(lateRecs.map(r=>r.name)).size}명</div></div>`;
-    renderStudentStatList('weekly-student-list', lateRecs);
+      <div class="metric"><div class="metric-label">총 지각</div><div class="metric-value late">${lr.length}건</div></div>
+      <div class="metric"><div class="metric-label">지각 학생</div><div class="metric-value">${new Set(lr.map(r=>r.name)).size}명</div></div>`;
+    renderStudentStatList('weekly-student-list',lr);
   }
 
   function renderMonthlySelect() {
-    const months = new Set(records.map(r => r.date.slice(0,7)));
+    const months=new Set(records.map(r=>r.date.slice(0,7)));
     months.add(todayStr().slice(0,7));
-    const sorted = [...months].sort().reverse();
-    document.getElementById('month-select').innerHTML = sorted.map(m => {
-      const [y, mo] = m.split('-');
+    document.getElementById('month-select').innerHTML=[...months].sort().reverse().map(m=>{
+      const [y,mo]=m.split('-');
       return `<option value="${m}">${y}년 ${parseInt(mo)}월</option>`;
     }).join('');
   }
 
   function renderMonthly() {
-    const month = document.getElementById('month-select').value;
-    if (!month) return;
-    const monthRecs = records.filter(r => r.date.startsWith(month));
-    const lateRecs  = monthRecs.filter(r => r.late);
-    const days      = new Set(monthRecs.map(r => r.date)).size;
-    document.getElementById('monthly-metrics').innerHTML = `
+    const month=document.getElementById('month-select').value; if(!month) return;
+    const mr=records.filter(r=>r.date.startsWith(month)), lr=mr.filter(r=>r.late), days=new Set(mr.map(r=>r.date)).size;
+    document.getElementById('monthly-metrics').innerHTML=`
       <div class="metric"><div class="metric-label">수업일</div><div class="metric-value">${days}일</div></div>
-      <div class="metric"><div class="metric-label">총 지각</div><div class="metric-value late">${lateRecs.length}건</div></div>
-      <div class="metric"><div class="metric-label">지각 학생</div><div class="metric-value">${new Set(lateRecs.map(r=>r.name)).size}명</div></div>`;
-    renderStudentStatList('monthly-student-list', lateRecs);
+      <div class="metric"><div class="metric-label">총 지각</div><div class="metric-value late">${lr.length}건</div></div>
+      <div class="metric"><div class="metric-label">지각 학생</div><div class="metric-value">${new Set(lr.map(r=>r.name)).size}명</div></div>`;
+    renderStudentStatList('monthly-student-list',lr);
   }
 
   function renderStudentStatList(elId, lateRecs) {
-    const counts = {};
-    students.forEach(s => { counts[s] = 0; });
-    lateRecs.forEach(r => { if (counts[r.name] !== undefined) counts[r.name]++; });
-    const sorted = students.map(s => ({ name:s, count:counts[s] })).sort((a,b) => b.count - a.count);
-    const max = Math.max(...sorted.map(s => s.count), 1);
-    document.getElementById(elId).innerHTML = sorted.map(s => `
+    const counts={}; students.forEach(s=>{counts[s]=0;}); lateRecs.forEach(r=>{if(counts[r.name]!==undefined)counts[r.name]++;});
+    const sorted=students.map(s=>({name:s,count:counts[s]})).sort((a,b)=>b.count-a.count);
+    const max=Math.max(...sorted.map(s=>s.count),1);
+    document.getElementById(elId).innerHTML=sorted.map(s=>`
       <div class="student-row">
         <div class="avatar">${s.name.slice(0,1)}</div>
-        <div style="flex:1;">
-          <div class="student-name">${s.name}</div>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${Math.round(s.count/max*100)}%"></div></div>
-        </div>
+        <div style="flex:1;"><div class="student-name">${s.name}</div>
+        <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${Math.round(s.count/max*100)}%"></div></div></div>
         <div class="student-stats">${s.count}회 지각</div>
       </div>`).join('');
   }
 
   function renderStudentManage() {
-    const el = document.getElementById('student-list-manage');
-    el.innerHTML = students.map((s, i) => `
+    const el=document.getElementById('student-list-manage');
+    el.innerHTML=students.map((s,i)=>`
       <div class="student-row">
         <div class="avatar">${s.slice(0,1)}</div>
         <div class="student-name">${s}</div>
-        <button class="btn-secondary" style="padding:4px 10px; font-size:12px;" onclick="removeStudent(${i})">
-          <i class="ti ti-x"></i> 삭제
-        </button>
-      </div>`).join('') || '<div class="empty">등록된 학생이 없습니다.</div>';
+        <button class="btn-secondary" style="padding:4px 10px;font-size:12px;" onclick="removeStudent(${i})"><i class="ti ti-x"></i> 삭제</button>
+      </div>`).join('')||'<div class="empty">등록된 학생이 없습니다.</div>';
   }
 
   function addStudent() {
-    const name = document.getElementById('new-student-input').value.trim();
-    if (!name) return;
-    if (students.includes(name)) { alert('이미 등록된 이름입니다.'); return; }
-    students.push(name);
-    save();
-    renderStudentManage();
-    document.getElementById('new-student-input').value = '';
+    const name=document.getElementById('new-student-input').value.trim();
+    if(!name) return;
+    if(students.includes(name)){alert('이미 등록된 이름입니다.');return;}
+    students.push(name); save(); renderStudentManage();
+    document.getElementById('new-student-input').value='';
   }
 
   function removeStudent(i) {
-    if (!confirm(`"${students[i]}" 학생을 삭제하시겠습니까?`)) return;
-    students.splice(i, 1);
-    save();
-    renderStudentManage();
+    if(!confirm(`"${students[i]}" 학생을 삭제하시겠습니까?`)) return;
+    students.splice(i,1); save(); renderStudentManage();
   }
 
-  function getMonday(date) {
-    const d   = new Date(date);
-    const day = d.getDay();
-    d.setDate(d.getDate() - (day === 0 ? 6 : day - 1));
-    return fmtDate(d);
-  }
-
-  function periodDates(period) {
-    const today = todayStr();
-    if (period === 'day') return r => r.date === today;
-    if (period === 'week') {
-      const mon = getMonday(today);
-      const sun = new Date(mon); sun.setDate(new Date(mon).getDate() + 6);
-      const sunStr = fmtDate(sun);
-      return r => r.date >= mon && r.date <= sunStr;
+  function periodFilter(period) {
+    const today=todayStr();
+    if(period==='day') return r=>r.date===today;
+    if(period==='week') {
+      const mon=getMonday(today), sunD=new Date(mon); sunD.setDate(new Date(mon).getDate()+6);
+      const sunStr=fmtDate(sunD); return r=>r.date>=mon&&r.date<=sunStr;
     }
-    if (period === 'month') {
-      const ym = today.slice(0, 7);
-      return r => r.date.startsWith(ym);
-    }
-    return () => true;
+    if(period==='month') { const ym=today.slice(0,7); return r=>r.date.startsWith(ym); }
+    return ()=>true;
   }
 
   function periodLabel(period) {
-    const today = todayStr();
-    if (period === 'day') return today;
-    if (period === 'week') {
-      const mon = getMonday(today);
-      const fri = new Date(mon); fri.setDate(new Date(mon).getDate() + 4);
-      return `${mon}_${fmtDate(fri)}`;
-    }
-    if (period === 'month') return today.slice(0, 7);
+    const today=todayStr();
+    if(period==='day') return today;
+    if(period==='week') { const mon=getMonday(today),fri=new Date(mon); fri.setDate(new Date(mon).getDate()+4); return `${mon}_${fmtDate(fri)}`; }
+    if(period==='month') return today.slice(0,7);
     return '전체';
   }
 
-  function periodName(period) {
-    return { day: '오늘', week: '이번 주', month: '이번 달', all: '전체' }[period];
-  }
+  function periodName(period) { return {day:'오늘',week:'이번 주',month:'이번 달',all:'전체'}[period]; }
 
-  function clearAllRecords() {
-    records = [];
-    save();
-    renderTodayLog(); renderToday(); renderWeekly(); renderMonthly();
-    alert('출석 기록이 초기화되었습니다.');
+  function exportData(period) {
+    const filtered=records.filter(periodFilter(period));
+    if(!filtered.length){alert('해당 기간에 출석 기록이 없습니다.');return;}
+    const header='날짜,이름,입실시간,지각여부\n';
+    const rows=filtered.sort((a,b)=>a.ts-b.ts).map(r=>`${r.date},${r.name},${fmtTime(r.ts)},${r.late?'지각':'정시'}`).join('\n');
+    const blob=new Blob(['\uFEFF'+header+rows],{type:'text/csv'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`출석기록_${periodLabel(period)}.csv`; a.click();
   }
 
   function clearRecords(period) {
-    const label = periodName(period);
-    if (!confirm(`${label} 출석 기록을 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) return;
-    const filter = periodDates(period);
-    records = records.filter(r => !filter(r));
-    save();
+    const label=periodName(period);
+    if(!confirm(`${label} 출석 기록을 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) return;
+    const filter=periodFilter(period);
+    records=records.filter(r=>!filter(r)); save();
     renderTodayLog(); renderToday(); renderWeekly(); renderMonthly();
     alert(`${label} 출석 기록이 삭제되었습니다.`);
-  }
-
-  function exportData(period) {
-    const filter = periodDates(period);
-    const filtered = records.filter(filter);
-    if (!filtered.length) { alert('해당 기간에 출석 기록이 없습니다.'); return; }
-    const header = '날짜,이름,입실시간,지각여부\n';
-    const rows   = filtered
-      .sort((a, b) => a.ts - b.ts)
-      .map(r => `${r.date},${r.name},${fmtTime(r.ts)},${r.late ? '지각' : '정시'}`)
-      .join('\n');
-    const blob = new Blob(['\uFEFF' + header + rows], { type: 'text/csv' });
-    const a    = document.createElement('a');
-    a.href     = URL.createObjectURL(blob);
-    a.download = `출석기록_${periodLabel(period)}.csv`;
-    a.click();
   }
 
   setInterval(updateClock, 1000);
